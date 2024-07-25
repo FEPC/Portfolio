@@ -1,20 +1,20 @@
-#Librerias
+#Libraries
 import math
 
-#Variables Globales
+#Global Variables
 numE = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-#Funciones
+#Functions
 def sumar(num1,num2,bas):
-    #A. Inicializar el resultado
-    #A.1. Lista de los digitos del resultado = res
+    #A. Initialise the result
+    #A.1. List of digits of the result = res
     res = []
-    #A.2. Creación de vairables auxiliares = sum1, sum2
+    #A.2. Creation of auxiliary variables = sum1, sum2
     sum1 = num1.copy()
     sum2 = num2.copy()
-    #B. Sumar/Restar digito a digito
+    #B. Add/subtract digit by digit
     while(sum1 != [] or sum2 != []):
-        #B.1 Obtención de los digitos a sumar = sum1, sum2
+        #B.1 Obtaining the digits to be added = sum1, sum2
         if sum1 == []:
             cif1 = 0
         else:
@@ -24,12 +24,12 @@ def sumar(num1,num2,bas):
             cif2 = 0
         else:
             cif2 = sum2.pop()
-        #B.2. Adición del digito resultante a la lista de resultado
+        #B.2. Adding the resulting digit to the result list
         res.append(cif1 + cif2)
-    #C. Buscar los resultados fuera de la base 
-    #C.1. Excedente/Faltante de la suma = aux
+    #C. Search for results outside the base 
+    #C.1. Surplus/shortfall of the sum = aux
     aux = 0
-    #C.2. Ajuste de números mayores/menores que la base
+    #C.2. Adjusting numbers greater than/less than the base
     for i in range(0,len(res)):
         if res[i] + aux >= bas:
             res[i] = res[i] + aux - bas
@@ -42,8 +42,8 @@ def sumar(num1,num2,bas):
             aux = 0
     if aux > 0:
         res.append(aux)
-    #D. Corregir/Invertir la posición de los números
-    #D.1 Auxiliar del resultado = auxR
+    #D. Correct/Reverse the position of numbers
+    #D.1 Auxiliary of the result = auxR
     auxR = res
     res = []
     while(auxR != []):
@@ -51,70 +51,70 @@ def sumar(num1,num2,bas):
     return res
 
 def multiplicar(mul1,mul2,bas):
-    #A. Inicializar el resultado
-    #A.1. Lista de los digitos del resultado = res
+    #A. Initialise the result
+    #A.1. List of digits of the result = res
     res = [0]
-    #A.2. Excedente de la suma = sumE
+    #A.2. Surplus of the sum = sumE
     sumE = 0
-    #B. Inversión de los digitos de los multiplos
-    #B.1. Inicialización del primer número invertido y su auxiliar = mul1I, aux1
+    #B. Inversion of the digits of the multipliers
+    #B.1. Initialisation of the first inverted number and its auxiliary = mul1I, aux1
     aux1 = mul1.copy()
     mul1I = []
     while(aux1 != []):
         mul1I.append(aux1.pop())
-    #B.2. Inicialización del primer número invertido y su auxiliar = mul2I, aux2
+    #B.2. Initialisation of the first inverted number and its auxiliary = mul2I, aux2
     aux2 = mul2.copy()
     mul2I = []
     while(aux2 != []):
         mul2I.append(aux2.pop())    
-    #C. Multiplicar digito a digito
+    #C. Multiply digit by digit
     for i in range(0,len(mul2I)):
         for j in range(0,len(mul1I)):
-            #C.1. Posición del resultado = pos
+            #C.1. Result position = pos
             pos = i + j
-            #C.2. Inicialización del resultado de la multiplicación = resM
+            #C.2. Initialisation of the result of multiplication = resM
             resM = [0]
-            #C.3. Iteración de la suma reiterada
+            #C.3. Iteration of the repeated sum
             for k in range(0,mul2I[i]):
                 resM = sumar(resM,[mul1I[j]],bas)
-            #C.4. Adición del resultado al total
+            #C.4. Addition of the result to the total
             for k in range(0,pos):
                 resM.append(0)
             res = sumar(res,resM,bas)
     return res
 
 def convertirEnteros(numI,basI,basF):
-    #1. Obtener datos preliminares
-    #1.1. Digitalización del número a convertir = digI
+    #1. Obtain preliminary data
+    #1.1. Digitisation of the number to be converted = digI
     digI = []
-    #2.1. Auxiliar del número = auxN
+    #2.1. Number auxiliary = auxN
     auxN = list(numI)
-    #2. Corregir/Invertir la posición de los números
+    #2. Correct/Reverse the position of numbers
     while(auxN != []):
         digI.append(auxN.pop())
-    #2.1. Conversión de valores a números
+    #2.1. Conversion of values to numbers
     for i in range(0,len(digI)):
         digI[i] = numE.index(digI[i])
-    #2.2. Obtención de la diferencia entre las bases = difB
+    #2.2. Obtaining the difference between the bases = diffB
     difB = basI-basF
-    #2.3. Digitalización de la diferencia entre las bases = digD
+    #2.3. Digitisation of the difference between the bases = digD
     digD = []
     digD.append(int(abs(difB)/basF))
     digD.append(abs(difB)%basF)
-    #2.4. Ajuste de negatividad en caso diB < 0 = negD
+    #2.4. Negativity adjustment in case diB < 0 = negD
     negD = False
     if difB < 0:
         negD = True
-    #3. Cambio de base
-    #3.1. Número resultante = lisR
+    #3. Change of base
+    #3.1. Resulting number = lisR
     lisR = [digI.pop()]
-    #3.2. Ajuste del los valores faltantes/sobrantes de cada grupo
+    #3.2. Adjustment of missing/excess values of each group
     while(digI != []):
-        #3.2.1. Ajuste del grupo = ajuG
+        #3.2.1. Group setting = ajuG
         ajuG = multiplicar(lisR,digD,basF)
-        #3.2.2. Corrimiento del valor a la base correcta
+        #3.2.2. Value shift to the correct base
         lisR.append(0)
-        #3.2.2.1. Digitalización del nuevo digito = auxN, auxA, digA
+        #3.2.2.1. Digitisation of new digit = auxN, auxA, digA
         auxN = digI.pop()
         auxA = str(int(auxN/basF) * 10 + auxN%basF)
         digA = list(auxA)
@@ -125,8 +125,8 @@ def convertirEnteros(numI,basI,basF):
             for i in range(0,len(ajuG)):
                 ajuG[i] *= -1
         lisR = sumar(lisR,ajuG,basF)
-    #3.3. Ajuste de los valores que sobrepasan la base
-    #3.3.3. Auxiliar de la posición = auxP
+    #3.3. Adjustment of the values exceeding the base
+    #3.3.3. Position auxiliary = auxP
     auxP = 0
     while(auxP < len(lisR)):
         if lisR[auxP] >= basF:
@@ -134,8 +134,8 @@ def convertirEnteros(numI,basI,basF):
             auxP = 0
         else:
             auxP += 1
-    #3.4. Ajuste de los caracteres a valores de la base
-    #3.4.1. Resultado final = numR
+    #3.4. Setting the characters to base values
+    #3.4.1. Final result = numR
     numR = ''
     for i in range(0,len(lisR)):
         numR += numE[lisR[i]]
@@ -144,33 +144,33 @@ def convertirEnteros(numI,basI,basF):
     return numR
 
 def conversorDecimales(decI,basI,basF):
-    #1. Obtener datos preliminares
-    #1.1. Digitalización del decimal a convertir = digD
+    #1. Obtain preliminary data
+    #1.1. Digitisation of the decimal to be converted = digD
     digD = list(decI)
-    #1.1.1 Conversión de valores a números
+    #1.1.1 Conversion of values to numbers
     for i in range(0,len(digD)):
         digD[i] = numE.index(digD[i])
-    #1.2. Digitalización de la base final = digB
+    #1.2. Digitisation of the final base = digB
     digB = []
     digB.append(int(basF/basI))
     digB.append(basF%basI)
-    #1.3. Lista de los resultados obtenidos = lisR
+    #1.3. List of results obtained = lisR
     lisR = []
-    #2. Hacer la multiplicacion del decimal por la baseF = deR
+    #2. Make the multiplication of the decimal by the baseF = deR
     decR = multiplicar(digD,digB,basI)
-    #3. Obtener el número de digitos del decimal = numD
+    #3. Get the number of digits of the decimal = numD
     numD = len(decI)
-    #4. Obtener excedente del decimal = excD
-    #4.1. Auxiliar de conversión de lista a número = auxC
+    #4. Get surplus of decimal = excD
+    #4.1. List-to-number conversion auxiliary = auxC
     excD = decR[(len(decR)-numD)::]
-    #4.4. Asociacion de los valores que se añadiran al resultado final = decR
+    #4.4. Association of the values to be added to the final result = decR
     if len(decR) == numD:
         lisR = [0]
     else:
         lisR = decR[0:(len(decR)-numD)]
-    #4.3. Variable de control de ciclo infinito = varC
+    #4.3. Infinite loop control variable = varC
     varC = 15
-    #4.4 Revisar si todos los elementos de excD son iguales a 0 = revE
+    #4.4 Check if all elements of excD are equal to 0 = revE
     revE = 0
     for i in range(0,len(excD)):
         revE += int(excD[i])
@@ -186,8 +186,8 @@ def conversorDecimales(decI,basI,basF):
         for i in range(0,len(excD)):
             revE += int(excD[i])
         varC -= 1
-    #5. Ajuste de los caracteres a valores de la base
-    #5.1. Resultado final = decR
+    #5. Setting the characters to base values
+    #5.1. Final result = decR
     decR = ''
     for i in range(0,len(lisR)):
         decR += numE[lisR[i]]
@@ -196,20 +196,20 @@ def conversorDecimales(decI,basI,basF):
     return decR
         
 
-#Proceso
+#Process
 class Proceso():
     while(True):
-        #1. Pedir variables
-        #1.1 Número a Convertir = numI
-        numI = input("Número a Convertir: ")
+        #1. Ordering variables
+        #1.1 Number to Convert = numI
+        numI = input("Number to Convert: ")
         decI = [0]
-        #1.2 Base del número a convertir = basI
-        basI = int(input("Base del número a convertir: "))
-        #1.3 Base a la que se quiere convertir = basF
-        basF = int(input("Base a la que se quiere convertir: "))
-        #2 Proceso de conversión
+        #1.2 Base of the number to be converted = basI
+        basI = int(input("Base of the number to be converted: "))
+        #1.3 Base to which you want to convert = basF
+        basF = int(input("Base to which you want to convert: "))
+        #2 Conversion process
         if numI.find(',') != -1:
-            #2.1. Separación del decimal = decI
+            #2.1. Decimal separation = decI
             decI = numI[(numI.find(',')+1)::]
             numI = numI[0:numI.find(',')]
             decR = conversorDecimales(decI,basI,basF)
@@ -217,8 +217,8 @@ class Proceso():
             decI = '0'
             decR = '0'
         numR = convertirEnteros(numI,basI,basF)
-        print("El número " + numI + "," + decI + " en base " + str(basI) + " es equivalente a " + numR + "," + decR + " en base " + str(basF))
-        #3 Reinicio del proceso
-        rep = input("¿Desea repetir el proceso? (Y/N)")
+        print("The number " + numI + "," + decI + " in base " + str(basI) + " is equivalent to " + numR + "," + decR + " in base " + str(basF))
+        #3 Restart the process
+        rep = input("Do you wish to repeat the process? (Y/N)")
         if rep != 'Y':
             break
