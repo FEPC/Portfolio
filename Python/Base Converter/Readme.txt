@@ -1,0 +1,2 @@
+Base Converter
+Program that receives a number in any base and returns it in another base. This program does not require converting through base 10; it performs the conversion directly. It is limited to base 26 since it only uses alphabetic characters to represent values greater than 9.
