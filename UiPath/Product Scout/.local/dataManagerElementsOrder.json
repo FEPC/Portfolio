@@ -12,9 +12,10 @@
       "Path": "Main.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
-        "amazonURL&Sequence_1",
+        "productName&Sequence_1",
         "dataProduct&Sequence_1",
-        "productName&Sequence_1"
+        "amazonURL&Sequence_1",
+        "filePath&Sequence_1"
       ],
       "ArgumentsSectionElementsOrder": [],
       "ConstantsSectionElementsOrder": [],
@@ -56,6 +57,8 @@
       "Path": "Data/OrganiceData.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
+        "productPrice&Sequence_2",
+        "productAvailability&Sequence_2",
         "productRate&Sequence_2"
       ],
       "ArgumentsSectionElementsOrder": [
@@ -71,6 +74,18 @@
       "VariablesSectionElementsOrder": [],
       "ArgumentsSectionElementsOrder": [
         "in_amazonURL"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Data/SaveData.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [],
+      "ArgumentsSectionElementsOrder": [
+        "in_filePath",
+        "in_dataProduct",
+        "in_productName"
       ],
       "ConstantsSectionElementsOrder": [],
       "AddedNamespaces": null
